@@ -1,5 +1,5 @@
 public enum Status { leftToDo, Done, Archived };
-public class Task
+public abstract class Task
 {
     private int id;
     private string name;

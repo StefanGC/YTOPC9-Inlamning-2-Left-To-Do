@@ -6,8 +6,8 @@ public class Menu
 {
     private int idCounter = 1;  //Counter to generate unique id
 
-    private List<Task> unfinishedList = new List<Task>();   //List for unfinished tasks
-    private List<Task> finishedList = new List<Task>();     //List for finished tasks
+    public List<Task> unfinishedList = new List<Task>();   //List for unfinished tasks
+    public List<Task> finishedList = new List<Task>();     //List for finished tasks
 
     //Function to add some examples at the beginning
     public void addExempleTask() {
@@ -24,7 +24,6 @@ public class Menu
     //Function to display the main menu
     public void showMenu() {
         System.Console.Clear();
-        System.Console.WriteLine(unfinishedList);
         System.Console.WriteLine("Wälkommen till Left To Do!!!");
         System.Console.WriteLine("Välj ett alternativ:");
         System.Console.WriteLine("  [0] Avsluta programmet.");
@@ -54,7 +53,8 @@ public class Menu
                 showSubMenu2();
                 break;
             case 3:
-                ArchiveAllTasks();
+                archiveAllTasks();
+                showMenu();
                 break;
             case 4:
                 showArchivedTasks();
@@ -102,27 +102,32 @@ public class Menu
             input = Console.ReadLine();
         }
         option_2 = int.Parse(input); 
-        bool found = false;
+        
         if (option_2 != 0) {
-            foreach (Task task in unfinishedList) {
-                if (task.getId() == option_2) {
-                    found = true;
-                    if (task.getStatus() == Status.Done) {
-                        System.Console.Write("\nOgiltig id, försök igen");
-                    } else {
-                        task.setStatus(Status.Done);
-                        System.Console.Write("\nStatus ändrad. Gå tillbaka till menyn");
-                    }
-                } 
-            }
-            if (!found)
-                throw new ArgumentException ($"\nInvalid {nameof(option_2)}");
-
+            markTaskComplete(option_2);
             Animate('.', 100, 10);
             System.Console.Clear();
             showSubMenu1();
         } else
             showMenu();
+    }
+
+    //Function to mark a task as completed
+    public void markTaskComplete (int id){
+        bool found = false;
+        foreach (Task task in unfinishedList) {
+            if (task.getId() == id) {
+                found = true;
+                if (task.getStatus() == Status.Done) {
+                    System.Console.Write("\nOgiltig id, försök igen");
+                } else {
+                    task.setStatus(Status.Done);
+                    System.Console.Write("\nStatus ändrad. Gå tillbaka till menyn");
+                }
+            } 
+        }
+        if (!found)
+            throw new ArgumentException ($"\nInvalid {nameof(id)}");
     }
 
     //Function to display the menu that allows you to add new tasks
@@ -164,7 +169,7 @@ public class Menu
     }
 
     //Function to display the menu that allows you to archive all completed tasks
-    private void ArchiveAllTasks() {
+    public void archiveAllTasks() {
         //First we go through the list to add as completed
         foreach (Task task in unfinishedList) {
             if (task.getStatus() == Status.Done) {
@@ -177,7 +182,6 @@ public class Menu
         }
         System.Console.Write("\nArkivera alla uppgifter som för närvarande är utförda. Gå tillbaka till menyn");
         Animate('.', 100, 10);
-        showMenu();
     }
 
     //Function to display archived tasks
