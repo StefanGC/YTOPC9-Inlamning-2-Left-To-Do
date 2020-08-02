@@ -1,5 +1,4 @@
-# Left to Do
-Inlämning: Left To Do, 5 Yhp
+# [YTOPC9] Inlämning 2: Left To Do 
 
 Vi ska i denna uppgift skapa en konsolapplikation för att hålla koll på och ordna våra arbetsuppgifter, det vill säga en digital att-göra lista. I denna uppgift ställs högre krav på att du har själv väljer en lämplig kodstruktur och tillämpar det du lärt dig om de objektorienterade principerna. Dessutom måste du utveckla din kod med stöd av enhetstester.
 
